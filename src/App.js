@@ -48,6 +48,10 @@ function App() {
         </div>
       </nav>
 
+      <div>
+        <h3>Showing the movie name :{text} </h3>
+      </div>
+
       <div className="container my-3">
         <div className='row'>
           {
@@ -64,7 +68,6 @@ function App() {
               )
             })
           }
-
       
         </div>
       </div>
