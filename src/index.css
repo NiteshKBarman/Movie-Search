@@ -22,13 +22,13 @@ body {
 
   .ribbon {
     position: absolute;
-    top: 10px; /* Adjust top value for vertical position */
-    left: 10px; /* Adjust left value for horizontal position */
-    background-color: #5f4d1c; /* Ribbon background color */
+    top: 10px; /* top value for vertical position */
+    left: 10px; /*left value for horizontal position */
+    background-color: #5f4d1c; 
     color: white;
     padding: 5px 10px; /* Adjust padding for spacing */
-    transform: rotate(-30deg); /* Rotate the ribbon acc degrees */
-    transform-origin: left top; /* Set the origin for rotation */
+    transform: rotate(-30deg);
+    transform-origin: left top; 
 }
   
 }
