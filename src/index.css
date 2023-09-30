@@ -17,8 +17,19 @@ body {
   .card-hover:hover {
     transform: translateY(-5px) scale(1.02);
     z-index: 1; /* Bring the card to the front */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* shadow effect when hovering */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
+
+  .ribbon {
+    position: absolute;
+    top: 10px; /* Adjust top value for vertical position */
+    left: 10px; /* Adjust left value for horizontal position */
+    background-color: #5f4d1c; /* Ribbon background color */
+    color: white;
+    padding: 5px 10px; /* Adjust padding for spacing */
+    transform: rotate(-30deg); /* Rotate the ribbon acc degrees */
+    transform-origin: left top; /* Set the origin for rotation */
+}
   
 }
 

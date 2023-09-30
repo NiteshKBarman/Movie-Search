@@ -50,6 +50,7 @@ function App() {
 
   return (
     <>
+    {/* Navigation bar */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
         <div className="container-fluid">
           <a className="navbar-brand" href={movie}>
@@ -70,7 +71,7 @@ function App() {
       </nav>
 
       <div className="container">
-        <h3 style={{ fontFamily:'sans-serif', fontSize: '24px', fontWeight: 'bold', color: 'white'}}>
+        <h3 style={{ fontFamily:'sans-serif', fontSize: '24px', fontWeight: 'bold', color: 'white', margin: '15px' , padding: '10px'}}>
           Found {totalResults} movies with title: {text}
         </h3>
       
@@ -86,8 +87,10 @@ function App() {
               (
               movie.map((value, index) => {
                 return (
-                  <div class="card mb-4 mx-3 card-hover" style={{ height:'20rem', width: '10rem' }} key={index}>
+                  // returning the data in card
+                  <div class="card mb-4 mx-3 card-hover" style={{ height:'24rem', width: '14rem',boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', borderRadius: '10px' }} key={index}>
                     <img src={value.Poster} class="card-img-top" alt="..." />
+                    <div class="ribbon">{value.Type}</div>
                     <div class="card-body">
                       <h5 class="card-title">{value.Title}</h5>
                       <h5 class="card-text">Year: {value.Year}</h5>
