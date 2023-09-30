@@ -5,9 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(17, 17, 59);
+  
+  
+
+  .card-hover {
+    transition: transform 0.2s ease-in-out, z-index 0.2s;
+    position: relative;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-5px) scale(1.02);
+    z-index: 1; /* Bring the card to the front */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* shadow effect when hovering */
+  }
+  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+

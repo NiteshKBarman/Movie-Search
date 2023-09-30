@@ -1,5 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
 
 function App() {
   const [text, setText] = useState('');
@@ -35,7 +37,7 @@ function App() {
   }, [page]); // Fetching the movie after the page changes
 
   const handleNextPage = () => {
-    if ((page + 1) * 8 <= totalResults) {
+    if ((page + 1) * 12 <= totalResults) {
       setPage(page + 1);
     }
   };
@@ -48,7 +50,7 @@ function App() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
         <div className="container-fluid">
           <a className="navbar-brand" href={movie}>
             OMDb Movies Search
@@ -68,47 +70,52 @@ function App() {
       </nav>
 
       <div className="container">
-        <h3>Found {totalResults} movies with title: {text} </h3>
-      </div>
+        <h3 style={{ fontFamily:'sans-serif', fontSize: '24px', fontWeight: 'bold', color: 'white'}}>
+          Found {totalResults} movies with title: {text}
+        </h3>
+      
 
-      <div className="container my-3">
-        <div className="row">
-          {loading ? (
-            <p>Loading...</p>): 
-            (
-            movie.map((value, index) => {
-              return (
-                <div class="card mb-3" style={{ width: '16rem' }} key={index}>
-                  <img src={value.Poster} class="card-img-top" alt="..." />
-                  <div class="card-body">
-                    <h3 class="card-title">{value.Title}</h3>
-                    <h5 class="card-text">Year: {value.Year}</h5>
-                    <a href="#" class="btn btn-primary">
-                      About
-                    </a>
-                  </div>
-                </div>
-              );
-            })
-          )}
-        </div>
-        <div className="fixed-bottom bg-light p-2">
-        <div className="container">
+        <div className="container my-3">
           <div className="row">
-            <div className="col text-center">
-              {page > 1 && (
-                <button className="btn btn-secondary" onClick={handlePrevPage}>
-                  Previous
-                </button>
-              )}
-              <span className="mx-2">
-                Page {page} of {Math.ceil(totalResults / 8)}
-              </span>
-              {page * 8 < totalResults && (
-                <button className="btn btn-secondary" onClick={handleNextPage}>
-                  Next
-                </button>
-              )}
+            {loading ? (
+              <div className="d-flex justify-content-center my-4">
+              <div className="spinner-border text-white" role="status" >
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>): 
+              (
+              movie.map((value, index) => {
+                return (
+                  <div class="card mb-4 mx-3 card-hover" style={{ height:'20rem', width: '10rem' }} key={index}>
+                    <img src={value.Poster} class="card-img-top" alt="..." />
+                    <div class="card-body">
+                      <h5 class="card-title">{value.Title}</h5>
+                      <h5 class="card-text">Year: {value.Year}</h5>
+                      
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+          <div className="fixed-bottom " style={{background:'#242726'}}>
+          <div className="container">
+            <div className="row">
+              <div className="col text-center">
+                {page > 1 && (
+                  <button className="btn btn-outline-success" style={{ color: 'white' }} onClick={handlePrevPage}>
+                    Previous
+                  </button>
+                )}
+                <span className="mx-2" style={{ color: 'white' }}>
+                  Page {page} of {Math.ceil(totalResults / 12)}
+                </span>
+                {page * 12 < totalResults && (
+                  <button className="btn btn-outline-success" style={{ color: 'white' }} onClick={handleNextPage}>
+                    Next
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
