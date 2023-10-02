@@ -1,17 +1,20 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
 function App() {
-  const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
   const [movie, setMovie] = useState([]);
   const [page, setPage] = useState(1); // tracking pages
   const [totalResults, setTotalResults] = useState(0); // Total number of search results
   const [loading, setLoading] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  
+  
 
-  const changeText = (event) => {
-    setText(event.target.value);
+  const changeTitle = (event) => {
+    setTitle(event.target.value);
   };
 
   const getMovie = (e) => {
@@ -20,10 +23,12 @@ function App() {
     fetchMovies();
   };
 
+  
+
   const fetchMovies = () => {
     setLoading(true);
     axios
-      .get(`https://www.omdbapi.com/?s=${text}&apikey=e8a6bca4&page=${page}`)
+      .get(`https://www.omdbapi.com/?s=${title}&apikey=e8a6bca4&page=${page}`)
       .then((response) => {
         console.log(response);
         setMovie(response.data.Search || []);
@@ -34,10 +39,10 @@ function App() {
 
   useEffect(() => {
     fetchMovies();
-  }, [page]); // Fetching the movie after the page changes
+  },[page]); // Fetching the movie after the page changes
 
   const handleNextPage = () => {
-    if ((page + 1) * 12 <= totalResults) {
+    if ((page + 1) * 10 <= totalResults) {
       setPage(page + 1);
     }
   };
@@ -47,6 +52,17 @@ function App() {
       setPage(page - 1);
     }
   };
+
+  //added
+  const handleCardClick = (clickedMovie) => {
+    setSelectedMovie(clickedMovie);
+    setOverlayVisible(true);
+  };
+
+  const closeOverlay = () => {
+    setOverlayVisible(false);
+  };
+
 
   return (
     <>
@@ -61,7 +77,7 @@ function App() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <form className="d-flex" onSubmit={getMovie}>
-              <input className="form-control me-2" type="search" placeholder="Search Movie" aria-label="Search" value={text} onChange={changeText}/>
+              <input className="form-control me-2" type="search" placeholder="Search Movie" aria-label="Search" value={title} onChange={changeTitle}/>
               <button className="btn btn-outline-success" type="submit">
                 Search
               </button>
@@ -72,7 +88,7 @@ function App() {
 
       <div className="container">
         <h3 style={{ fontFamily:'sans-serif', fontSize: '24px', fontWeight: 'bold', color: 'white', margin: '15px' , padding: '10px'}}>
-          Found {totalResults} movies with title: {text}
+          Found {totalResults} movies with title: {title}
         </h3>
       
 
@@ -83,18 +99,25 @@ function App() {
               <div className="spinner-border text-white" role="status" >
                 <span className="visually-hidden">Loading...</span>
               </div>
-            </div>): 
-              (
+            </div>
+            ): (
               movie.map((value, index) => {
                 return (
                   // returning the data in card
-                  <div class="card mb-4 mx-3 card-hover" style={{ height:'24rem', width: '14rem',boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', borderRadius: '10px' }} key={index}>
-                    <img src={value.Poster} class="card-img-top" alt="..." />
-                    <div class="ribbon">{value.Type}</div>
-                    <div class="card-body">
-                      <h5 class="card-title">{value.Title}</h5>
-                      <h5 class="card-text">Year: {value.Year}</h5>
-                      
+                  <div className="card-container mb-4 mx-3 card-hover"
+                  style={{ height:'24rem',
+                   width: '14rem',
+                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                    borderRadius: '10px' }}
+                    key={index} >
+                    <div onClick={()=>handleCardClick(value)}>
+                    
+                      <img src={value.Poster} className="card-img-top" alt="..." />
+                      <div className="ribbon">{value.Type}</div>
+                      <div className="card-body">
+                        <h5 className="card-title">{value.Title}</h5>
+                        <h5 className="card-text">Year: {value.Year}</h5>
+                      </div>
                     </div>
                   </div>
                 );
@@ -111,9 +134,9 @@ function App() {
                   </button>
                 )}
                 <span className="mx-2" style={{ color: 'white' }}>
-                  Page {page} of {Math.ceil(totalResults / 12)}
+                  Page {page} of {Math.ceil(totalResults / 10)}
                 </span>
-                {page * 12 < totalResults && (
+                {page * 10 < totalResults && (
                   <button className="btn btn-outline-success" style={{ color: 'white' }} onClick={handleNextPage}>
                     Next
                   </button>
@@ -124,6 +147,33 @@ function App() {
         </div>
       </div>
       </div>
+      {overlayVisible && (
+        <div className="overlay" onClick={closeOverlay}>
+          <div className="overlay-content" onClick={(e) => e.stopPropagation()}>
+            {selectedMovie && (
+              <div className='overlay-content-inside'>
+                <div className='left'>
+                  <img src={selectedMovie.Poster}/>
+                </div>
+                
+                <div className='right'>
+                  <h2>{selectedMovie.Title}</h2>
+                  <p>Type:{selectedMovie.Type}</p>
+                  <p>Year: {selectedMovie.Year}</p>
+                  
+                </div>
+                
+                
+                
+              </div>
+              
+
+
+            )}
+            <button className="close-button" onClick={closeOverlay}>Close</button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

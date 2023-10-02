@@ -16,21 +16,76 @@ body {
   
   .card-hover:hover {
     transform: translateY(-5px) scale(1.02);
-    z-index: 1; /* Bring the card to the front */
+    z-index: 1; /* Bringing the card to the front */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
 
   .ribbon {
     position: absolute;
-    top: 10px; /* top value for vertical position */
-    left: 10px; /*left value for horizontal position */
+    top: 10px; 
+    left: 10px; 
     background-color: #5f4d1c; 
     color: white;
-    padding: 5px 10px; /* Adjust padding for spacing */
-    transform: rotate(-30deg);
+    padding: 5px 10px;
+    transform: rotate(-25deg);
     transform-origin: left top; 
 }
+
+
+.card-container {
+  position: relative;
+  cursor: pointer;
+  background-color: #74653f; 
+  color: white;
   
+}
+
+
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; 
+}
+
+
+.overlay-content {
+  background: #fff; 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 80%; 
+  overflow: auto;
+  text-shadow: #d32f2f;
+
+
+  
+}
+
+.close-button {
+  background: #f44336;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.close-button:hover {
+  background: #d32f2f;
+}
+
+
+
 }
 
 code {
